@@ -15,5 +15,5 @@ int main (){
         cout << "num1 is greater than num2" << endl;
     else
         cout << "They are equal" << endl;
-}
+} 
 
