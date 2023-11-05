@@ -3,7 +3,7 @@
 using namespace std;
 
 // initialize atributes
-BigReal::BigReal(){
+BigReal::BigReal(){ 
     integer = "0";
     fraction = "";
     n_sign = '+';
