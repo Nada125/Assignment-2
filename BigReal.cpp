@@ -7,7 +7,7 @@ BigReal::BigReal(){
     integer = "0";
     fraction = "";
     n_sign = '+';
-    isNegative = false;
+    isNegative = false; 
 
 }
 // add double value and convert to string
@@ -286,7 +286,7 @@ bool BigReal :: operator>(BigReal other)
 }
 
 bool  BigReal :: operator<(BigReal other)
-{
+{ 
     string n2 = other.integer;
     string d2 = other.fraction;
     string n1 = this->integer;
