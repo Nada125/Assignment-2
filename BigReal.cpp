@@ -3,11 +3,11 @@
 using namespace std;
 
 // initialize atributes
-BigReal::BigReal(){ 
+BigReal::BigReal(){
     integer = "0";
     fraction = "";
     n_sign = '+';
-    isNegative = false; 
+    isNegative = false;
 
 }
 // add double value and convert to string
@@ -116,7 +116,7 @@ BigReal BigReal::operator+( const BigReal& other) {
     }
 
     // Add the fraction parts
-    std::string resultFraction;
+    string resultFraction;
     int k = larger.fraction.size() - 1;
     int l = smaller.fraction.size() - 1;
     carry = 0;
@@ -150,82 +150,82 @@ BigReal BigReal::operator+( const BigReal& other) {
     return result;
 }
 
-//BigReal BigReal::operator-(BigReal& other){
-//    // Check if signs are different, perform addition instead
-//    if (n_sign != other.n_sign) {
-//        BigReal negatedOther = other;
-//        negatedOther.n_sign *= -1;
-//        return *this + negatedOther;
-//    }
-//
-//    // Determine the larger integer part
-//    const std::string& larger = (num1.size() >= num2.size()) ? num1 : num2;
-//    const std::string& smaller = (num1.size() < num2.size()) ? num1 : num2;
-//
-//    // Subtract the integer parts
-//    string resultIntegerPart;
-//    int carry = 0;
-//    int i = larger.size() - 1;
-//    int j = smaller.size() - 1;
-//
-//    while (i >= 0) {
-//        int largerDigit = larger[i] - '0' - carry;
-//
-//        if (j >= 0) {
-//            int smallerDigit = smaller[j] - '0';
-//
-//            if (largerDigit < smallerDigit) {
-//                largerDigit += 10;
-//                carry = 1;
-//            } else {
-//                carry = 0;
-//            }
-//
-//            largerDigit -= smallerDigit;
-//            j--;
-//        } else if (largerDigit < 0) {
-//            largerDigit += 10;
-//            carry = 1;
-//        } else {
-//            carry = 0;
-//        }
-//
-//        resultIntegerPart = to_string(largerDigit) + resultIntegerPart;
-//        i--;
-//    }
-//
-//    // Create the result string
-//    string result = resultIntegerPart;
-//
-//    // Subtract the fraction parts
-//    int k = larger.size();
-//    int l = smaller.size();
-//
-//    while (k > 0 || l > 0) {
-//        int largerDigit = (k > 0) ? larger[k - 1] - '0' : 0;
-//        int smallerDigit = (l > 0) ? smaller[l - 1] - '0' : 0;
-//
-//        if (largerDigit < smallerDigit) {
-//            largerDigit += 10;
-//            carry = 1;
-//        } else {
-//            carry = 0;
-//        }
-//
-//        largerDigit -= smallerDigit;
-//        result = std::to_string(largerDigit) + result;
-//
-//        k--;
-//        l--;
-//    }
-//
-//    // Add the decimal point if necessary
-//    if (result.size() > 1) {
-//        result.insert(result.size() - 1, ".");
-//    }
-//
-//    return result;
-//}
+BigReal BigReal::operator-(BigReal& other){
+    // Check if signs are different, perform addition instead
+    if (n_sign != other.n_sign) {
+        BigReal negatedOther = other;
+        negatedOther.n_sign *= -1;
+        return *this + negatedOther;
+    }
+
+    // Determine the larger integer part
+    const BigReal& larger = (integer.size() >= other.integer.size()) ? *this : other;
+    const BigReal& smaller = (integer.size() < other.integer.size()) ? *this : other;
+
+    // Subtract the integer parts
+    string resultIntegerPart;
+    int carry = 0;
+    int i = larger.integer.size() - 1;
+    int j = smaller.integer.size() - 1;
+
+    while (i >= 0) {
+        int largerDigit = larger.integer[i] - '0' - carry;
+
+        if (j >= 0) {
+            int smallerDigit = smaller.integer[j] - '0';
+
+            if (largerDigit < smallerDigit) {
+                largerDigit += 10;
+                carry = 1;
+            } else {
+                carry = 0;
+            }
+
+            largerDigit -= smallerDigit;
+            j--;
+        } else if (largerDigit < 0) {
+            largerDigit += 10;
+            carry = 1;
+        } else {
+            carry = 0;
+        }
+
+        resultIntegerPart = to_string(largerDigit) + resultIntegerPart;
+        i--;
+    }
+
+    // Subtract the fraction parts
+    string resultFractionPart;
+    int k = 0;
+    int l = 0;
+
+    while (k < larger.fraction.size() || l < smaller.fraction.size()) {
+        int largerDigit = (k < larger.fraction.size()) ? larger.fraction[k] - '0' : 0;
+        int smallerDigit = (l < smaller.fraction.size()) ? smaller.fraction[l] - '0' : 0;
+
+        if (largerDigit < smallerDigit) {
+            largerDigit += 10;
+            carry = 1;
+        } else {
+            carry = 0;
+        }
+
+        largerDigit -= smallerDigit;
+        resultFractionPart += to_string(largerDigit);
+
+        k++;
+        l++;
+    }
+
+    string result = resultIntegerPart + "." + resultFractionPart;
+
+    // Add the sign if necessary
+    if (n_sign == -1) {
+        result = "-" + result;
+    }
+
+    return result;
+}
 bool BigReal :: operator==(BigReal other)
 {
     if (integer == other.integer && fraction == other.fraction)
@@ -251,7 +251,7 @@ bool BigReal :: operator>(BigReal other)
     {
         int difference = n1.size() - n2.size();
         string zeros(difference, '0');
-        n2 =   zeros+n2;
+        n2 =  zeros+n2;
     }
     y = max(d1.size(), d2.size());
     if (y == d2.size())
@@ -286,7 +286,7 @@ bool BigReal :: operator>(BigReal other)
 }
 
 bool  BigReal :: operator<(BigReal other)
-{ 
+{
     string n2 = other.integer;
     string d2 = other.fraction;
     string n1 = this->integer;
