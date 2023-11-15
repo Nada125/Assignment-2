@@ -5,7 +5,7 @@ using namespace std;
 // initialize atributes
 BigReal::BigReal(){
     integer = "0";
-    fraction = "";
+    fraction  = "";
     n_sign = '+';
     isNegative = false;
 
